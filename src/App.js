@@ -2,7 +2,8 @@ import React from 'react';
 import './App.css';
 import { 
   AppBar, Container, Toolbar, IconButton, Typography, Box, Button, Paper, Grid, 
-  CardContent, Card, CardMedia, CardActions, BottomNavigation, BottomNavigationAction 
+  CardContent, Card, CardMedia, CardActions, BottomNavigation, BottomNavigationAction,
+  TextField, Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions 
 } from '@material-ui/core';
 
 import FolderIcon from '@material-ui/icons/Folder';
@@ -66,6 +67,16 @@ function App() {
     setValue(newValue);
   };
 
+  const [open, setOpen] = React.useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+  }
+
   return (
     <>
     <AppBar position = 'fixed'>
@@ -76,7 +87,34 @@ function App() {
             </IconButton>
               <Typography variant='h6' className={classes.title}>Sample Material-UI</Typography>
                 <Box mr={3}>
-                  <Button color='inherit' variant='outlined'>Log In</Button>
+                  <Button color='inherit' variant='outlined' onClick={handleClickOpen}>Log In</Button>
+
+                  <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
+                    <DialogTitle id='form-dialog-title'>Log in</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText>Log in to see videos</DialogContentText>
+                      <TextField
+                        autoFocus
+                        margin='dense'
+                        id='name'
+                        label='EmailAdress'
+                        type='email'
+                        fullWidth
+                      />
+                      <TextField
+                        autoFocus
+                        margin='dense'
+                        id='pass'
+                        label='Password'
+                        type='password'
+                        fullWidth
+                      />
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleClose} color='prymary'>Cancel</Button>
+                      <Button onClick={handleClose} color='prymary'>Log in</Button>
+                    </DialogActions>
+                  </Dialog>
                 </Box>
                 <Button color='secondary' variant='contained'>Log In</Button>
           </Toolbar>
@@ -167,9 +205,8 @@ function App() {
       </Container>
     </main>
     <footer>
-      <Typography variant='h6' align='center' gutterBottom>
-          Footer
-      </Typography>
+      <Typography variant='h6' align='center' gutterBottom></Typography>
+      
       <BottomNavigation 
       value={value} 
       onChange={handleChange} 
@@ -180,6 +217,9 @@ function App() {
         <BottomNavigationAction label='Nearby' value='nearby' icon={<LocationOnIcon/>} />
         <BottomNavigationAction label='Foder' value='folder' icon={<FolderIcon/>} />
       </BottomNavigation>
+      <Typography align='center' color='textSecondary' component='p' variant='subtitle1'>
+        Sample Material-UI
+      </Typography>
     </footer>
     </>
   );
